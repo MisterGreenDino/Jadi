@@ -15,7 +15,7 @@
     <ClInclude Include="src\JADI.h" />
     <ClInclude Include="src\JADI\Core\Application.h" />
     <ClInclude Include="src\JADI\Core\Core.h" />
-    <ClInclude Include="src\JADI\Core\EntryPoint.h" />
+    <ClInclude Include="src\JADI\Core\main.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JADI\Debug\Log.cpp" />

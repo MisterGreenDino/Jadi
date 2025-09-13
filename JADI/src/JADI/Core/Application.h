@@ -3,15 +3,12 @@
 #include "Core.h"
 
 namespace JADI {
-	class JADI_API Application
-	{
-	public:
-		Application();
-		virtual ~Application();
+    class JADI_API Application {
+    public:
+        Application();
+        virtual ~Application();
+        void Run();
+    };
 
-		void Run();
-	};
-
-	//To be defined in a client
-	Application* CreateApplication();
+    Application* CreateApplication();
 }

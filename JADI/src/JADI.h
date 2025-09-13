@@ -7,5 +7,5 @@
 #include <stdio.h>
 
 // -- Entry point --
-#include "JADI/Core/EntryPoint.h"
+#include "JADI/Core/main.h"
 // -- Entry point --

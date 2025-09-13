@@ -1,0 +1,52 @@
+# Visual Studio cache
+.vs/
+
+# Build outputs
+[Jj]ADI/bin/
+[Jj]ADI/bin/int/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Compiled binaries
+*.exe
+*.dll
+*.lib
+*.exp
+*.app
+*.so
+*.dylib
+
+# Debug/Intermediate files
+*.obj
+*.pdb
+*.idb
+*.ipdb
+*.iobj
+*.ilk
+*.tmp
+*.cache
+*.res
+
+# Build system artifacts
+*.recipe
+*.log
+*.tlog
+*.lastbuildstate
+
+# Precompiled headers
+*.pch
+*.gch
+
+# Project user-specific
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Misc
+*.db
+*.db-shm
+*.db-wal
+*.DS_Store
+Thumbs.db

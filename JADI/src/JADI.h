@@ -2,10 +2,10 @@
 
 // For use by JADI applications
 
-#include "JADI/Application.h"
-#include "JADI/Log.h"
+#include "JADI/Core/Application.h"
+#include "JADI/Core/Log.h"
 #include <stdio.h>
 
 // -- Entry point --
-#include "JADI/EntryPoint.h"
+#include "JADI/Core/EntryPoint.h"
 // -- Entry point --

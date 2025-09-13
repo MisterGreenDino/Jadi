@@ -7,7 +7,7 @@ extern JADI::Application* JADI::CreateApplication();
 int main(int argc, char** argv)
 {
 	JADI::Log::Init();
-	JADI_CORE_WARN("JADI Log Not initialized");
+	JADI_CORE_INFO("JADI Log Not initialized");
 	JADI_WARN("Client log Initialized");
 
 	auto app = JADI::CreateApplication();

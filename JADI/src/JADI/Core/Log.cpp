@@ -9,6 +9,7 @@ namespace JADI {
 
 	void Log::Init()
 	{
+		//REMAKE MASK, DIFFERENTIATE BETWEEN JADI & CLIENT, DIFFERENTIATE SEVERITY ASWELL
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 		s_CoreLogger = spdlog::stdout_color_mt("JADI");
 		s_CoreLogger->set_level(spdlog::level::trace);

@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\JADI\Core.h">
+    <ClInclude Include="src\JADI\Core\Core.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\JADI\Application.h">
+    <ClInclude Include="src\JADI\Core\Application.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\JADI.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\JADI\EntryPoint.h">
+    <ClInclude Include="src\JADI\Core\EntryPoint.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\JADI\Log.h">
+    <ClInclude Include="src\JADI\Core\Log.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\JADI\Application.cpp">
+    <ClCompile Include="src\JADI\Core\Application.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\JADI\Log.cpp">
+    <ClCompile Include="src\JADI\Core\Log.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

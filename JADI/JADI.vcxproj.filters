@@ -27,7 +27,7 @@
     <ClInclude Include="src\JADI\Core\EntryPoint.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\JADI\Core\Log.h">
+    <ClInclude Include="src\JADI\Debug\Log.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClCompile Include="src\JADI\Core\Application.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\JADI\Core\Log.cpp">
+    <ClCompile Include="src\JADI\Debug\Log.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

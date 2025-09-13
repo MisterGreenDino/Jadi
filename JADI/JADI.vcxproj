@@ -55,7 +55,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Sandbox</OutDir>
     <IntDir>$(SolutionDir)bin\int\$(Configuration)-$(Platform)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

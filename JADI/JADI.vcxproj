@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\JADI\Renderer\Render.h" />
+    <ClInclude Include="src\JADI\Math\Renderer\Projection.h" />
     <ClInclude Include="src\JADI\Debug\Log.h" />
     <ClInclude Include="src\JADI.h" />
     <ClInclude Include="src\JADI\Core\Application.h" />
@@ -18,6 +20,8 @@
     <ClInclude Include="src\JADI\Core\main.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\JADI\Renderer\Render.cpp" />
+    <ClCompile Include="src\JADI\Math\Renderer\Projection.cpp" />
     <ClCompile Include="src\JADI\Debug\Log.cpp" />
     <ClCompile Include="src\JADI\Core\Application.cpp" />
   </ItemGroup>
@@ -68,12 +72,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>JADI_PLATFORM_WINDOWS;JADI_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JADI\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JADI\vendor\spdlog\include;$(SolutionDir)JADI\vendor\glfw\include;</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)JADI\vendor\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,12 +90,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>JADI_PLATFORM_WINDOWS;JADI_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JADI\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JADI\vendor\spdlog\include;$(SolutionDir)JADI\vendor\glfw\include;</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)JADI\vendor\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

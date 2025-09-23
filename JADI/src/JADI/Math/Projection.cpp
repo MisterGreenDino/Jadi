@@ -14,6 +14,7 @@ void JADI::Projection::SetupVar() {
     nearPlane = 1.0f / (2.0f * tanf(fovRad * 0.5f)); // optional, can be 0.1 or similar
     farPlane = 100.0f; // render distance
 
+    //Temporary camera specs
     camPosition.x = 0;
     camPosition.y = 0;
     camPosition.z = 0;
@@ -52,6 +53,8 @@ void JADI::Projection::ProjCamera() {
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
             viewMatrix.data[i][j] = 0.0f;
+
+    //Set the view matrix by roation
     viewMatrix.data[0][0] = right.x;
     viewMatrix.data[0][1] = up.x;
     viewMatrix.data[0][2] = -forward.x;
@@ -94,17 +97,17 @@ void JADI::Projection::ProjMatrix() {
 }
 
 Vec3 JADI::Projection::ProjVertice(float x, float y, float z) {
-    // Step 1: input vertex as homogeneous coordinate
+    //homogeneous coordinate
     Vec4 U{ x, y, z, 1.0f };
 
-    // Step 2: multiply by view matrix
+    //multiply by view matrix
     Vec4 V;
     V.x = viewMatrix.data[0][0] * U.x + viewMatrix.data[0][1] * U.y + viewMatrix.data[0][2] * U.z + viewMatrix.data[0][3] * U.w;
     V.y = viewMatrix.data[1][0] * U.x + viewMatrix.data[1][1] * U.y + viewMatrix.data[1][2] * U.z + viewMatrix.data[1][3] * U.w;
     V.z = viewMatrix.data[2][0] * U.x + viewMatrix.data[2][1] * U.y + viewMatrix.data[2][2] * U.z + viewMatrix.data[2][3] * U.w;
     V.w = viewMatrix.data[3][0] * U.x + viewMatrix.data[3][1] * U.y + viewMatrix.data[3][2] * U.z + viewMatrix.data[3][3] * U.w;
 
-    // Step 3: multiply by projection matrix
+    //multiply by projection matrix
     Vec4 P;
     P.x = projectionMatrix.data[0][0] * V.x + projectionMatrix.data[0][1] * V.y + projectionMatrix.data[0][2] * V.z + projectionMatrix.data[0][3] * V.w;
     P.y = projectionMatrix.data[1][0] * V.x + projectionMatrix.data[1][1] * V.y + projectionMatrix.data[1][2] * V.z + projectionMatrix.data[1][3] * V.w;

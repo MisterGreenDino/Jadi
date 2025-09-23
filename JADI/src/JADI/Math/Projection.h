@@ -1,8 +1,8 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include "../../Renderer/Render.h"
+#include "../Debug/Log.h"
 
-struct Matrixe {
+struct Matrix {
 	float data[4][4];
 };
 
@@ -14,13 +14,12 @@ struct Vec3 {
 	float x, y, z;
 };
 
-
 namespace JADI {
 	class Projection
 	{
 	public:
 		// Setup variable (near plan, far plan, focal lenght, fov)
-		void CalcVar();
+		void SetupVar();
 
 		// Setup the camera (position, yaw, pitch)
 		void ProjCamera();
@@ -29,22 +28,28 @@ namespace JADI {
 		void ProjMatrix();
 
 		// Project a 3D vertex into 2D screen space
-		Vec3 ProjVertice();
+		Vec3 ProjVertice(float x, float y,float z);
 
+		void setScreenHeight(float height) { screenHeight = height; }
+		void setScreenWidth(float width) { screenWidth = width; }
+		void setAspectRatio(float ratio) { aspectRatio = ratio; }
 
 	private:
+		float aspectRatio;
+		float screenWidth;
+		float screenHeight;
+
 		Vec3 camPosition;
 		float camYaw;
 		float camPitch;
 		float camFov;
 
-		float focalLength;
 		float nearPlane;
 		float farPlane;
-		float fovFactor;
+		float focalLength;
 
-		Matrixe projectionMatrix;
-		Matrixe viewMatrix;
+		Matrix projectionMatrix;
+		Matrix viewMatrix;
 
 	};
 

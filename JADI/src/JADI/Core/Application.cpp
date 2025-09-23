@@ -1,8 +1,6 @@
 #include "Application.h"
 #include "../Debug/Log.h"
 #include "../Renderer/Render.h"
-#include "../Math/Rendering/Projection.h"
-
 
 #include <chrono>
 #include <GLFW/glfw3.h>
@@ -41,23 +39,19 @@ namespace JADI {
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 
         JADI::Renderer render;
-        render.initScreenSize(window);
-        LOG_CORE_INFO(render.getScreenWidth());
-        LOG_CORE_INFO(render.getScreenHeight());
 
 
         while (!glfwWindowShouldClose(window)) {
             //Main loop
             glClear(GL_COLOR_BUFFER_BIT);
 
+            render.initScreenSize(window);
+
             //Input::Process();
             //Update(delta);
-            Renderer::Draw();
-
+            render.Draw();
             glfwSwapBuffers(window);            //Prevent flickering frame to frame
             glfwPollEvents();                   //Handle inputs (freeze if not here)
-
-
             
             //Delta time calculation
             auto now = std::chrono::high_resolution_clock::now();

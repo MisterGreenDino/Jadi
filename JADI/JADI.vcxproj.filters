@@ -30,7 +30,7 @@
     <ClInclude Include="src\JADI\Debug\Log.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\JADI\Math\Rendering\Projection.h">
+    <ClInclude Include="src\JADI\Math\Projection.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\JADI\Renderer\Render.h">
@@ -44,7 +44,7 @@
     <ClCompile Include="src\JADI\Debug\Log.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\JADI\Math\Rendering\Projection.cpp">
+    <ClCompile Include="src\JADI\Math\Projection.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\JADI\Renderer\Render.cpp">

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "../Debug/Log.h"
 #include "../Renderer/Render.h"
+#include "../Math/Rendering/Projection.h"
 
 
 #include <chrono>
@@ -39,6 +40,10 @@ namespace JADI {
 
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 
+        JADI::Renderer render;
+        render.initScreenSize(window);
+        LOG_CORE_INFO(render.getScreenWidth());
+        LOG_CORE_INFO(render.getScreenHeight());
 
 
         while (!glfwWindowShouldClose(window)) {

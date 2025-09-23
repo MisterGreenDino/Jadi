@@ -3,6 +3,19 @@
 #include "../Debug/Log.h"
 
 namespace JADI {
+    void JADI::Renderer::initScreenSize(GLFWwindow* window) {
+        if (!window) return; // safety check
+
+        // Get the actual framebuffer size
+        glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+
+        // Compute aspect ratio
+        if (screenHeight != 0)
+            aspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
+        else
+            aspectRatio = 1.0f; // fallback
+    }
+
     void Renderer::Init() {
     }
 

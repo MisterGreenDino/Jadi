@@ -1,6 +1,10 @@
 #include "Application.h"
 #include "../Debug/Log.h"
+#include "../Renderer/Render.h"
+
+
 #include <chrono>
+#include <GLFW/glfw3.h>
 
 namespace JADI {
 
@@ -8,25 +12,24 @@ namespace JADI {
         dt = 0;
         JADI::Log::Init();
     }
+
     Application::~Application() {}
     
     
     void Application::Run() {
-        LOG_CORE_INFO("Initialized Log!");
+        JADI_CORE_FATAL("Initialized Log!");
         auto last = std::chrono::high_resolution_clock::now();
-        auto now = std::chrono::high_resolution_clock::now();
+        long long delta = 0;
         while (true) {
             //Main loop
-            Render();
-            Update();
+
+
+            
             //Delta time calculation
             auto now = std::chrono::high_resolution_clock::now();
-            dt = std::chrono::duration_cast<std::chrono::microseconds>(now - last).count();;
+            delta = std::chrono::duration_cast<std::chrono::microseconds>(now - last).count();;
             last = now;
         }
     }
 
-    long long Application::getDelta() {
-        return dt;
-    }
 }

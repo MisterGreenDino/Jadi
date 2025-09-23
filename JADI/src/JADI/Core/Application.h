@@ -8,7 +8,11 @@ namespace JADI {
         Application();
         virtual ~Application();
         void Run();
+        virtual void Render() = 0;
+        virtual void Update() = 0;
+        long long getDelta();
+    private:
+        long long dt;
     };
-
     Application* CreateApplication();
 }

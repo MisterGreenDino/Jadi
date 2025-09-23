@@ -5,12 +5,21 @@ class Sandbox : public JADI::Application
 public:
 	Sandbox()
 	{
-
 	}
 
 	~Sandbox()
 	{
 
+	}
+
+	void Render() override
+	{
+		
+	}
+
+	void Update() override
+	{
+		
 	}
 };
 

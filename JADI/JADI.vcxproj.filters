@@ -36,6 +36,9 @@
     <ClInclude Include="src\JADI\Renderer\Render.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\JADI\Math\Chunk.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JADI\Core\Application.cpp">
@@ -48,6 +51,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\JADI\Renderer\Render.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JADI\Math\Chunk.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

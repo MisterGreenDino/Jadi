@@ -5,6 +5,7 @@
 
 void JADI::Projection::SetupVar() {
     // Convert FOV to radians
+    camFov = 50;
     float fovRad = camFov * (3.14159265f / 180.0f);
 
     // Focal length factor (fovFactor)
@@ -24,7 +25,6 @@ void JADI::Projection::SetupVar() {
 
 
 void JADI::Projection::ProjCamera() {
-    // Convert angles to radians
     float yawRad = camYaw * 3.14159265f / 180.0f;
     float pitchRad = camPitch * 3.14159265f / 180.0f;
 
@@ -91,33 +91,32 @@ void JADI::Projection::ProjMatrix() {
     projectionMatrix.data[0][0] = f / a;
     projectionMatrix.data[1][1] = f;
     projectionMatrix.data[2][2] = (Zf + Zn) / (Zn - Zf);
-    projectionMatrix.data[2][3] = 2*(Zf * Zn) / (Zn - Zf);
+    projectionMatrix.data[2][3] = 2 * (Zf * Zn) / (Zn - Zf);
     projectionMatrix.data[3][2] = -1;
     projectionMatrix.data[3][3] = 0;
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            viewProjMatrix.data[i][j] = 0.0f;
+            for (int k = 0; k < 4; k++)
+                viewProjMatrix.data[i][j] += viewMatrix.data[i][k] * projectionMatrix.data[k][j];
+        }
 }
 
 Vec3 JADI::Projection::ProjVertice(float x, float y, float z) {
-    //homogeneous coordinate
-    Vec4 U{ x, y, z, 1.0f };
+    const float* m = &viewProjMatrix.data[0][0]; // pointer to matrix data for fast access
+    float px = m[0] * x + m[1] * y + m[2] * z + m[3];
+    float py = m[4] * x + m[5] * y + m[6] * z + m[7];
+    float pz = m[8] * x + m[9] * y + m[10] * z + m[11];
+    float pw = m[12] * x + m[13] * y + m[14] * z + m[15];
 
-    //multiply by view matrix
-    Vec4 V;
-    V.x = viewMatrix.data[0][0] * U.x + viewMatrix.data[0][1] * U.y + viewMatrix.data[0][2] * U.z + viewMatrix.data[0][3] * U.w;
-    V.y = viewMatrix.data[1][0] * U.x + viewMatrix.data[1][1] * U.y + viewMatrix.data[1][2] * U.z + viewMatrix.data[1][3] * U.w;
-    V.z = viewMatrix.data[2][0] * U.x + viewMatrix.data[2][1] * U.y + viewMatrix.data[2][2] * U.z + viewMatrix.data[2][3] * U.w;
-    V.w = viewMatrix.data[3][0] * U.x + viewMatrix.data[3][1] * U.y + viewMatrix.data[3][2] * U.z + viewMatrix.data[3][3] * U.w;
-
-    //multiply by projection matrix
-    Vec4 P;
-    P.x = projectionMatrix.data[0][0] * V.x + projectionMatrix.data[0][1] * V.y + projectionMatrix.data[0][2] * V.z + projectionMatrix.data[0][3] * V.w;
-    P.y = projectionMatrix.data[1][0] * V.x + projectionMatrix.data[1][1] * V.y + projectionMatrix.data[1][2] * V.z + projectionMatrix.data[1][3] * V.w;
-    P.z = projectionMatrix.data[2][0] * V.x + projectionMatrix.data[2][1] * V.y + projectionMatrix.data[2][2] * V.z + projectionMatrix.data[2][3] * V.w;
-    P.w = projectionMatrix.data[3][0] * V.x + projectionMatrix.data[3][1] * V.y + projectionMatrix.data[3][2] * V.z + projectionMatrix.data[3][3] * V.w;
+    // avoid divide by zero
+    float invW = (pw != 0.0f) ? (1.0f / pw) : 10000.0f;
 
     Vec3 screen;
-    screen.x = ((P.x / P.w) + 1.0f) * 0.5f * screenWidth;
-    screen.y = (1.0f - ((P.y / P.w) + 1.0f) * 0.5f) * screenHeight;
-    screen.z = P.z / P.w;
+    screen.x = (px * invW + 1.0f) * 0.5f * screenWidth;
+    screen.y = (1.0f - (py * invW + 1.0f) * 0.5f) * screenHeight;
+    screen.z = pz * invW;
 
     return screen;
 }

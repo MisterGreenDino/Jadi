@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\JADI\Math\Chunk.h" />
     <ClInclude Include="src\JADI\Renderer\Render.h" />
     <ClInclude Include="src\JADI\Math\Projection.h" />
     <ClInclude Include="src\JADI\Debug\Log.h" />
@@ -20,6 +21,7 @@
     <ClInclude Include="src\JADI\Core\main.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\JADI\Math\Chunk.cpp" />
     <ClCompile Include="src\JADI\Renderer\Render.cpp" />
     <ClCompile Include="src\JADI\Math\Projection.cpp" />
     <ClCompile Include="src\JADI\Debug\Log.cpp" />

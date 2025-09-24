@@ -34,6 +34,16 @@ namespace JADI {
 		void setScreenWidth(float width) { screenWidth = width; }
 		void setAspectRatio(float ratio) { aspectRatio = ratio; }
 
+		const Vec3& getCamPosition() const { return camPosition; }
+		float getCamYaw() const { return camYaw; }
+		float getCamPitch() const { return camPitch; }
+		float getCamFov() const { return camFov; }
+		float getFov() const { return camFov; }
+		float getAspectRatio() const { return aspectRatio; }
+		float getNearPlane() const { return nearPlane; }
+		float getFarPlane() const { return farPlane; }
+		float getFocalLength() const { return focalLength; }
+
 	private:
 		float aspectRatio;
 		float screenWidth;
@@ -50,6 +60,7 @@ namespace JADI {
 
 		Matrix projectionMatrix;
 		Matrix viewMatrix;
+		Matrix viewProjMatrix;
 
 	};
 

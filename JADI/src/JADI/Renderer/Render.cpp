@@ -1,6 +1,10 @@
 #include "Render.h"
+#include "../Debug/Log.h"
 
 #include <GLFW/glfw3.h>
+#include <random>
+
+static int runCount = 0;
 
 namespace JADI {
     void JADI::Renderer::initScreenSize(GLFWwindow* window) {
@@ -27,16 +31,71 @@ namespace JADI {
     }
 
 
+    //GENERATE MESHES FOR TESTING PURPOSE
     void Renderer::Init() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> dist(-0.1f, 0.1f);
 
+        const int numMeshes = 100000;
+        const int estimatedVertices = numMeshes * 2;
 
+        vertices.clear();
+        projected.clear();
+        projectedFlag.clear();
+        meshList.clear();
+
+        vertices.reserve(estimatedVertices);
+        projected.resize(estimatedVertices);
+        projectedFlag.resize(estimatedVertices, false);
+        meshList.reserve(numMeshes);
+
+        int prevIndices[3] = { -1, -1, -1 };
+
+        // pre-fill first 3 vertices
+        for (int i = 0; i < 3; i++) {
+            vertices.push_back({ dist(gen), dist(gen), dist(gen) });
+            prevIndices[i] = i;
+        }
+
+        meshList.push_back({ prevIndices[0], prevIndices[1], prevIndices[2] });
+
+        for (int i = 1; i < numMeshes; i++) {
+            Mesh m;
+            int shareCount = (gen() % 2) + 1; // share 1 or 2 vertices
+
+            if (shareCount == 2) {
+                m.v0_id = prevIndices[0];
+                m.v1_id = prevIndices[1];
+                vertices.push_back({ dist(gen), dist(gen), dist(gen) });
+                m.v2_id = vertices.size() - 1;
+            }
+            else {
+                m.v0_id = prevIndices[0];
+                vertices.push_back({ dist(gen), dist(gen), dist(gen) });
+                m.v1_id = vertices.size() - 1;
+                vertices.push_back({ dist(gen), dist(gen), dist(gen) });
+                m.v2_id = vertices.size() - 1;
+            }
+
+            prevIndices[0] = m.v0_id;
+            prevIndices[1] = m.v1_id;
+            prevIndices[2] = m.v2_id;
+
+            meshList.push_back(m);
+        }
+        LOG_CORE_ERROR("Render init finished");
     }
 
-    // In Renderer.cpp
-    void JADI::Renderer::Draw() {
+
+
+
+    void Renderer::Draw() {
+        runCount++;
+        LOG_CORE_INFO(runCount);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Set orthographic projection for pixel coordinates
+        // set screen coordinates
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, screenWidth, screenHeight, 0, -1, 1);
@@ -47,26 +106,40 @@ namespace JADI {
         proj.ProjCamera();
         proj.ProjMatrix();
 
-        Vec3 v0 = proj.ProjVertice(0.2, 0.5, -0.2);
-        Vec3 v1 = proj.ProjVertice(-0.5, -0.5, -0.5);
-        Vec3 v2 = proj.ProjVertice(0.5, -0.5, -0.5);
+        // reset flags
+        std::fill(projectedFlag.begin(), projectedFlag.end(), false);
 
-        glColor3f(0.0, 0.0, 0.0);
-        glBegin(GL_TRIANGLES);
-        glVertex2f(v0.x, v0.y);
-        glVertex2f(v1.x, v1.y);
-        glVertex2f(v2.x, v2.y);
-        glEnd();
+        for (const Mesh& m : meshList) {
+            if (!Chunk::IsMeshInView()) continue;
 
-        Vec3 v3 = proj.ProjVertice(0.2, 0.5, -1.0);
-        Vec3 v4 = proj.ProjVertice(-0.5, -0.5, -0.5);
-        Vec3 v5 = proj.ProjVertice(0.5, -0.5, -0.5);
-        glColor3f(0.0, 1.0, 0.0);
-        glBegin(GL_TRIANGLES);
-        glVertex2f(v3.x, v3.y);
-        glVertex2f(v4.x, v4.y);
-        glVertex2f(v5.x, v5.y);
-        glEnd();
+            // project vertices only if not already
+            if (!projectedFlag[m.v0_id]) {
+                projected[m.v0_id] = proj.ProjVertice(vertices[m.v0_id].x, vertices[m.v0_id].y, vertices[m.v0_id].z);
+                projectedFlag[m.v0_id] = true;
+            }
+            if (!projectedFlag[m.v1_id]) {
+                projected[m.v1_id] = proj.ProjVertice(vertices[m.v1_id].x, vertices[m.v1_id].y, vertices[m.v1_id].z);
+                projectedFlag[m.v1_id] = true;
+            }
+            if (!projectedFlag[m.v2_id]) {
+                projected[m.v2_id] = proj.ProjVertice(vertices[m.v2_id].x, vertices[m.v2_id].y, vertices[m.v2_id].z);
+                projectedFlag[m.v2_id] = true;
+            }
+
+            const Vec3& v0 = projected[m.v0_id];
+            const Vec3& v1 = projected[m.v1_id];
+            const Vec3& v2 = projected[m.v2_id];
+
+            if (!std::isfinite(v0.x) || !std::isfinite(v1.x) || !std::isfinite(v2.x))
+                continue;
+
+            glColor3f(0.0f, 0.0f, 0.0f);
+            glBegin(GL_TRIANGLES);
+            glVertex2f(v0.x, v0.y);
+            glVertex2f(v1.x, v1.y);
+            glVertex2f(v2.x, v2.y);
+            glEnd();
+        }
     }
 
     void Renderer::Shutdown() {

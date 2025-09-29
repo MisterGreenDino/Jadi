@@ -1,5 +1,6 @@
 #pragma once
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+
 #include "../Math/Projection.h"
 #include "../Math/Chunk.h"
 
@@ -44,6 +45,8 @@ namespace JADI {
         int screenWidth;
         
         float aspectRatio;
+
+        GLuint vbo, vao;
 
         std::vector<Mesh> meshList;
         std::vector<Vec3> vertices;        // all 3D positions

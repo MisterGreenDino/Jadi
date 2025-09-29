@@ -5,6 +5,8 @@
 #include <chrono>
 #include <GLFW/glfw3.h>
 
+static int runCount = 0;
+
 namespace JADI {
 
     Application::Application() {
@@ -31,37 +33,41 @@ namespace JADI {
             glfwTerminate();
             return;
         }
-        else { LOG_CORE_INFO("GLFW window was created"); }
+        LOG_CORE_INFO("GLFW window was created");
 
-        //From now on, all OpenGL calls (glClear, glDraw*, etc.) will affect this window.
         glfwMakeContextCurrent(window);
+
+        // Load OpenGL functions with GLAD
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            LOG_CORE_FATAL("Failed to initialize GLAD");
+            return;
+        }
 
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 
         JADI::Renderer render;
         render.Init();
 
-
         while (!glfwWindowShouldClose(window)) {
-            //Main loop
-            glClear(GL_COLOR_BUFFER_BIT);
+            runCount++;
+            LOG_CORE_INFO(runCount);
 
-            render.initScreenSize(window);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            //Input::Process();
-            //Update(delta);
-            render.Draw();
-            glfwSwapBuffers(window);            //Prevent flickering frame to frame
-            glfwPollEvents();                   //Handle inputs (freeze if not here)
-            
-            //Delta time calculation
+            //render.initScreenSize(window);
+            //render.Draw();
+
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+
             auto now = std::chrono::high_resolution_clock::now();
-            delta = std::chrono::duration_cast<std::chrono::microseconds>(now - last).count();;
+            delta = std::chrono::duration_cast<std::chrono::microseconds>(now - last).count();
             last = now;
         }
 
         glfwDestroyWindow(window);
         glfwTerminate();
     }
+
 
 }

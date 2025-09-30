@@ -2,18 +2,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "../Debug/Log.h"
-
-struct Matrix {
-	float data[4][4];
-};
-
-struct Vec4 {
-	float x, y, z, w;
-};
-
-struct Vec3 {
-	float x, y, z;
-};
+#include "../Math/MathStruct.h"
 
 namespace JADI {
 	class Projection

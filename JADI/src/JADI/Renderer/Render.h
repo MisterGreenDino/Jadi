@@ -3,13 +3,14 @@
 
 #include "../Math/Projection.h"
 #include "../Math/Chunk.h"
+#include "../Math/MathStruct.h"
+
+#include "Shader.h"
 
 #include "../Debug/Log.h"
 #include <functional>
 
-struct Mesh {
-    int v0_id, v1_id, v2_id;
-};
+
 
 struct Vec3Hash {
     std::size_t operator()(const Vec3& v) const noexcept {
@@ -23,7 +24,6 @@ struct Vec3Hash {
         return h;
     }
 };
-
 
 namespace JADI {
     class Renderer {
@@ -43,16 +43,19 @@ namespace JADI {
         Projection proj;
         int screenHeight;
         int screenWidth;
-        
+
         float aspectRatio;
 
-        GLuint vbo, vao;
+        GLuint vboID;
+        GLuint vaoID;
 
         std::vector<Mesh> meshList;
-        std::vector<Vec3> vertices;        // all 3D positions
-        std::vector<Vec3> projected;       // projected 2D positions
-        std::vector<bool> projectedFlag;   // flag to skip re-projection
+        std::vector<Vec3> vertices;
 
+        Shader* shader;
+
+        std::vector<Vec3> verticesWorld;
+        std::vector<Vec3> verticesScreen;
     };
 
 }

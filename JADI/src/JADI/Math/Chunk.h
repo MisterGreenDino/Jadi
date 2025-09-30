@@ -1,6 +1,4 @@
 #pragma once
-#include "../Renderer/Render.h"
-#include "Projection.h"
 
 namespace JADI {
     class Chunk {

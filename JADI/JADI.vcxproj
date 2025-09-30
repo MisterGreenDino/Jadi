@@ -26,6 +26,8 @@
     <ClCompile Include="src\JADI\Math\Projection.cpp" />
     <ClCompile Include="src\JADI\Debug\Log.cpp" />
     <ClCompile Include="src\JADI\Core\Application.cpp" />
+    <ClCompile Include="src\JADI\Renderer\Shader.cpp" />
+    <ClCompile Include="vendor\glad\src\glad.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

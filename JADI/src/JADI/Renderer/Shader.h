@@ -9,6 +9,8 @@ public:
 
     void Bind() const;
     void Unbind() const;
+    GLuint GetProgramID() const { return programID; }
+
 
 private:
     GLuint programID;

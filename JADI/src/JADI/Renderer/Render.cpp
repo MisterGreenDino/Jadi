@@ -32,12 +32,14 @@ namespace JADI {
 #include <cmath>   // for cos, sin
 
     void Renderer::Init() {
-        shader = new Shader("Shaders/red.vert", "Shaders/red.frag");
+        shader = new Shader("D:\\Jadi\\Jadi\\JADI\\src\\JADI\\Renderer\\Shaders\\red.vert", "D:\\Jadi\\Jadi\\JADI\\src\\JADI\\Renderer\\Shaders\\red.frag");
 
+
+        glEnable(GL_DEPTH_TEST);
         glGenVertexArrays(1, &vaoID);
         glGenBuffers(1, &vboID);
 
-        int n = 1000000;
+        int n = 50000000;
         float maxRadius = 0.5f;
         float size = 0.01f;
 
@@ -67,50 +69,39 @@ namespace JADI {
             }
         }
 
-
         LOG_CORE_INFO("Finished generating meshes: total meshes = {}, total vertices = {}",
             meshList.size(), verticesWorld.size());
         // Now generate GPU buffers
         glBindVertexArray(vaoID);
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vec3), vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, verticesWorld.size() * sizeof(Vec3), verticesWorld.data(), GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*)0);
         glEnableVertexAttribArray(0);
         glBindVertexArray(0);
 
 
         LOG_CORE_INFO("Mesh initialized: total vertices = {}", verticesWorld.size());
-
     }
     
     void Renderer::Draw() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //Update projection matrices
+        // Update projection & view
         proj.SetupVar();
         proj.ProjCamera();
         proj.ProjMatrix();
 
-        //Project vertices to screen space
-        verticesScreen.clear();
-        verticesScreen.reserve(verticesWorld.size());
-        for (const Vec3& v : verticesWorld) {
-            Vec3 projected = proj.ProjVertice(v.x, v.y, v.z);
-            verticesScreen.push_back(projected);
-        }
-
-        //Update buffer with new vertex positions
         glBindVertexArray(vaoID);
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, verticesScreen.size() * sizeof(Vec3),
-            verticesScreen.data(), GL_DYNAMIC_DRAW);
-
-
-        //Use shader and draw triangles
         shader->Bind();
-        glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(verticesScreen.size()));
+        GLuint mvpLoc = glGetUniformLocation(shader->GetProgramID(), "uMVP");
+        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, proj.GetViewProjMatrix());
+        glDrawArrays(GL_TRIANGLES, 0, verticesWorld.size());
         shader->Unbind();
-
         glBindVertexArray(0);
+
+    }
+
+    void Renderer::Shutdown() {
+    
     }
 }

@@ -17,9 +17,6 @@ namespace JADI {
 		// Setup the projection matrix (perspective)
 		void ProjMatrix();
 
-		// Project a 3D vertex into 2D screen space
-		Vec3 ProjVertice(float x, float y,float z);
-
 		void setScreenHeight(float height) { screenHeight = height; }
 		void setScreenWidth(float width) { screenWidth = width; }
 		void setAspectRatio(float ratio) { aspectRatio = ratio; }
@@ -33,6 +30,7 @@ namespace JADI {
 		float getNearPlane() const { return nearPlane; }
 		float getFarPlane() const { return farPlane; }
 		float getFocalLength() const { return focalLength; }
+		const float* GetViewProjMatrix() const {return &viewProjMatrix.data[0][0];}
 
 	private:
 		float aspectRatio;

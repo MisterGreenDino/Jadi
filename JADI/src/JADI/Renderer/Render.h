@@ -31,18 +31,18 @@ namespace JADI {
 
         void Init();
         void Draw();
-        static void Shutdown();
+        void Shutdown();
         void initScreenSize(GLFWwindow* window);
 
 
-        int getScreenWidth() const { return screenWidth; }
-        int getScreenHeight() const { return screenHeight; }
-        int getAspectRatio() const { return aspectRatio; }
+        float getScreenWidth() const { return screenWidth; }
+        float getScreenHeight() const { return screenHeight; }
+        float getAspectRatio() const { return aspectRatio; }
 
     private:
         Projection proj;
-        int screenHeight;
-        int screenWidth;
+        float screenHeight;
+        float screenWidth;
 
         float aspectRatio;
 

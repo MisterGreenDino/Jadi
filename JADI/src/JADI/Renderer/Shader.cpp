@@ -1,11 +1,27 @@
 #include "Shader.h"
+#include "../Debug/Log.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
 
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     std::string vertexCode = LoadFile(vertexPath);
     std::string fragmentCode = LoadFile(fragmentPath);
+
+    LOG_CORE_INFO("Loading vertex shader from path: {}", vertexPath);
+    LOG_CORE_INFO("Loading fragment shader from path: {}", fragmentPath);
+
+    // Log file contents for debug
+    if (!vertexCode.empty())
+        LOG_CORE_INFO("Vertex shader loaded successfully, first 100 chars:\n{}", vertexCode.substr(0, 100));
+    else
+        LOG_CORE_ERROR("Vertex shader failed to load: {}", vertexPath);
+
+    if (!fragmentCode.empty())
+        LOG_CORE_INFO("Fragment shader loaded successfully, first 100 chars:\n{}", fragmentCode.substr(0, 100));
+    else
+        LOG_CORE_ERROR("Fragment shader failed to load: {}", fragmentPath);
 
     GLuint vertShader = CompileShader(GL_VERTEX_SHADER, vertexCode);
     GLuint fragShader = CompileShader(GL_FRAGMENT_SHADER, fragmentCode);
@@ -26,6 +42,7 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
 }
+
 
 Shader::~Shader() {
     glDeleteProgram(programID);
